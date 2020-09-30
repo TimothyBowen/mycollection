@@ -155,3 +155,13 @@ class Tools:
             return val
         except IndexError:
             return []
+
+# Create decorator to bind a function to a class after the classes intialisation
+def addmethod(cls, reuse = False):
+    def decor(func):
+        def wrap(*args, **kwargs): 
+            return func(*args, **kwargs)
+        setattr(cls, func.__name__, wrap)
+        if reuse:
+            return func # Returning here allows the function to be used seperate of the class
+    return decor
