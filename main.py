@@ -78,8 +78,8 @@ class Math:
 
 
 class Tools:
-    @staticmethod
     MISSING_START = object()
+    @staticmethod
     def reduce(func, seq, start = MISSING_START):
         #Take a sequence and cumulativly apply a function of two arguments to the items of it, reducing it to a single value.
 
@@ -101,7 +101,7 @@ class Tools:
 
     def flatten(arr):
         #Take an array/list of multiple dimensions and flatten it to 1 dimension
-        
+
         try:
             if type(arr) is list:
                 val = flatten(arr[0])
