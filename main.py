@@ -1,4 +1,17 @@
+from decimal import getcontext, Decimal
+getcontext().prec = 130
+
+# Constants #
+ADD = lambda a, b: a+b
+SUB = lambda a, b: a-b
+MUL = lambda a, b: a*b
+DIV = lambda a, b: a/b
+PI = Decimal('3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460')
+MISSING_START = object()
+
 class Math:
+    # Container of all mathematic functions
+
     @staticmethod
     def floor(val):
         #Take a floating point value and return the rounded down version.
@@ -24,23 +37,15 @@ class Math:
             raise TypeError("n must be a float")
 
         return int((-val // 1) * -1)
-
+    
     @staticmethod
     def fact(n):
-        #Take a positive integer and return its factorial value
-        
-        #fact(4) = 4 * fact(3)
-        #fact(3) = 3 * fact(2)
-        #fact(2) = 2 * fact(1)
-        #fact(1) = 1
-        #1*2*3*4 = 24
+        # Reduce an array of integers from 1 to n+1 using MUL
 
         if type(n) != int or n < 0:
             raise TypeError("n must be a positive integer")
 
-        if n in [0, 1]:
-            return 1
-        return n * fact(n-1)
+        return Tools.reduce(MUL, [i for i in range(1, n+1)])
 
     @staticmethod
     def root(n, r=2):
@@ -52,7 +57,7 @@ class Math:
             raise TypeError("n must be a positve integer or float")
         
         power = 1/r
-        val = n ** power
+        val = Decimal(n ** power)
         if int(val) == float(str(val)[:8]):
             return int(val)
         return val
@@ -75,10 +80,42 @@ class Math:
         denominator = (2**n) * root(5)
         val = numerator / denominator
         return floor(val)
+    
+    @staticmethod
+    def product(arr):
+        # Take an array and reduce it using MUL
 
+        if not hasattr(arr, "__iter__"):
+            raise TypeError(f"{arr} is not iterable and must be")
+
+        return Tools.reduce(MUL, arr)
+
+    @staticmethod
+    def deepproduct(arr):
+        # Take an array and flatten it, then call product on it
+
+        flattened_arr = Tools.flatten(arr)
+        return Math.product(flattened_arr)
+    
+    @staticmethod
+    def sum(arr):
+        # Take an array and reduce it using ADD
+
+        if not hasattr(arr, "__iter__"):
+            raise TypeError(f"{arr} is not iterable and must be")
+
+        return Tools.reduce(ADD, arr)
+
+    @staticmethod
+    def deepsum(arr):
+        # Take an array and flatten it, then call sum on it
+
+        flattened_arr = Tools.flatten(arr)
+        return Math.sum(flattened_arr)
 
 class Tools:
-    MISSING_START = object()
+    # Container for all 'tool' functions
+
     @staticmethod
     def reduce(func, seq, start = MISSING_START):
         #Take a sequence and cumulativly apply a function of two arguments to the items of it, reducing it to a single value.
@@ -99,14 +136,15 @@ class Tools:
             val = func(val, v)
         return val
 
+    @staticmethod
     def flatten(arr):
         #Take an array/list of multiple dimensions and flatten it to 1 dimension
 
         try:
             if type(arr) is list:
-                val = flatten(arr[0])
+                val = Tools.flatten(arr[0])
                 if len(arr) > 1:
-                    val += flatten(arr[1:])
+                    val += Tools.flatten(arr[1:])
             else:
                 val = [arr]
             return val
