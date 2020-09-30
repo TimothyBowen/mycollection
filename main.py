@@ -1,31 +1,31 @@
 class Math:
     @staticmethod
     def floor(val):
-    """
-    Take a floating point value and return the rounded down version.
-    
-    Return the truncated integer version of the value using int built-in function if its positive.
-    Return the negative integer version of its rounded up absolute value if the value is negative.
-    """
-    if type(val) != float:
-        raise TypeError("n must be a float")
-    
-    if val > 0:
-        return int(val)
-    return -ceil(abs(val))
+        """
+        Take a floating point value and return the rounded down version.
+        
+        Return the truncated integer version of the value using int built-in function if its positive.
+        Return the negative integer version of its rounded up absolute value if the value is negative.
+        """
+        if type(val) != float:
+            raise TypeError("n must be a float")
+        
+        if val > 0:
+            return int(val)
+        return -ceil(abs(val))
 
     @staticmethod
     def ceil(val):
-    """
-    Take a floating point value and return the rounded up version.
+        """
+        Take a floating point value and return the rounded up version.
 
-    Any decimal amount added to a value when negative will add one to the integer division result,
-    therefore returning this value multiplied by -1 will round up the value.
-    """
-    if type(val) != float:
-        raise TypeError("n must be a float")
+        Any decimal amount added to a value when negative will add one to the integer division result,
+        therefore returning this value multiplied by -1 will round up the value.
+        """
+        if type(val) != float:
+            raise TypeError("n must be a float")
 
-    return int((-val // 1) * -1)
+        return int((-val // 1) * -1)
 
     @staticmethod
     def fact(n):
