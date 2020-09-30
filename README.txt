@@ -1,0 +1,1 @@
+This is my collection of helpful functions that I can use for future projects and will be updated as and when I remember to.
