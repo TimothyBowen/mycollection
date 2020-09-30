@@ -1,12 +1,17 @@
 from decimal import getcontext, Decimal
 getcontext().prec = 130
 
-# Constants #
+### Constants ###
+# Math #
 ADD = lambda a, b: a+b
 SUB = lambda a, b: a-b
 MUL = lambda a, b: a*b
 DIV = lambda a, b: a/b
+IDV = lambda a, b: a//b
+MOD = lambda a, b: a%b
 PI = Decimal('3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460')
+
+# Tools #
 MISSING_START = object()
 
 class Math:
@@ -59,7 +64,7 @@ class Math:
         power = 1/r
         val = Decimal(n ** power)
         if int(val) == float(str(val)[:8]):
-            return int(val)
+            return Decimal(val)
         return val
 
     @staticmethod
