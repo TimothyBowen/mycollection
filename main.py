@@ -1,12 +1,11 @@
 class Math:
     @staticmethod
     def floor(val):
-        """
-        Take a floating point value and return the rounded down version.
+        #Take a floating point value and return the rounded down version.
         
-        Return the truncated integer version of the value using int built-in function if its positive.
-        Return the negative integer version of its rounded up absolute value if the value is negative.
-        """
+        #Return the truncated integer version of the value using int built-in function if its positive.
+        #Return the negative integer version of its rounded up absolute value if the value is negative.
+
         if type(val) != float:
             raise TypeError("n must be a float")
         
@@ -16,12 +15,11 @@ class Math:
 
     @staticmethod
     def ceil(val):
-        """
-        Take a floating point value and return the rounded up version.
+        #Take a floating point value and return the rounded up version.
+        
+        #Any decimal amount added to a value when negative will add one to the integer division result,
+        #therefore returning this value multiplied by -1 will round up the value.
 
-        Any decimal amount added to a value when negative will add one to the integer division result,
-        therefore returning this value multiplied by -1 will round up the value.
-        """
         if type(val) != float:
             raise TypeError("n must be a float")
 
@@ -29,6 +27,14 @@ class Math:
 
     @staticmethod
     def fact(n):
+        #Take a positive integer and return its factorial value
+        
+        #fact(4) = 4 * fact(3)
+        #fact(3) = 3 * fact(2)
+        #fact(2) = 2 * fact(1)
+        #fact(1) = 1
+        #1*2*3*4 = 24
+
         if type(n) != int or n < 0:
             raise TypeError("n must be a positive integer")
 
@@ -38,11 +44,10 @@ class Math:
 
     @staticmethod
     def root(n, r=2):
-        """
-        Take an integer or floating point value and return its rth root.
+        #Take an integer or floating point value and return its rth root.
+        
+        #Any number to the power of 1/r will give its rth root.
 
-        Any number to the power of 1/r will give its rth root.
-        """
         if type(n) not in [int, float] or n < 0:
             raise TypeError("n must be a positve integer or float")
         
@@ -54,14 +59,13 @@ class Math:
 
     @staticmethod
     def fib(n):
-        """
-        Calculate nth value of the fibonacci sequence using a version of Binet's Forumula.
+        #Calculate nth value of the fibonacci sequence using a version of Binet's Forumula.
 
-        posPHI = 1 + root(5)
-        negPHI = 1 - root(5)
-        val = posPHIⁿ - negPHIⁿ / 2ⁿ * √5
-        floor(val)
-        """
+        #posPHI = 1 + root(5)
+        #negPHI = 1 - root(5)
+        #val = posPHIⁿ - negPHIⁿ / 2ⁿ * √5
+        #floor(val)
+
         if type(n) != int or n < 0:
             raise TypeError("n must be a positive integer")
 
@@ -77,9 +81,8 @@ class Tools:
     @staticmethod
     MISSING_START = object()
     def reduce(func, seq, start = MISSING_START):
-        """
-        Take a sequence and cumulativly apply a function of two arguments to the items of it, reducing it to a single value.
-        """
+        #Take a sequence and cumulativly apply a function of two arguments to the items of it, reducing it to a single value.
+
         it = iter(seq)
         if start is not MISSING_START:
             val = it
@@ -97,9 +100,8 @@ class Tools:
         return val
 
     def flatten(arr):
-        """
-        Take an array/list of multiple dimensions and flatten it to 1 dimension
-        """
+        #Take an array/list of multiple dimensions and flatten it to 1 dimension
+        
         try:
             if type(arr) is list:
                 val = flatten(arr[0])
