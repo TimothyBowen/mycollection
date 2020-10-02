@@ -25,7 +25,7 @@ class Math:
         #Return the negative integer version of its rounded up absolute value if the value is negative.
 
         if type(val) != float:
-            raise TypeError("n must be a float")
+            raise TypeError("%s is not a floating point value and must be" % (val))
         
         if val > 0:
             return int(val)
@@ -39,7 +39,7 @@ class Math:
         #therefore returning this value multiplied by -1 will round up the value.
 
         if type(val) != float:
-            raise TypeError("n must be a float")
+            raise TypeError("%s is not a floating point value and must be" % (val))
 
         return int((-val // 1) * -1)
     
@@ -47,9 +47,15 @@ class Math:
     def fact(n):
         # Reduce an array of integers from 1 to n+1 using MUL
 
-        if type(n) != int or n < 0:
-            raise TypeError("n must be a positive integer")
-
+        if type(n) != int:
+            raise TypeError("%s is not a integer and must be" % (n))
+        
+        if n < 0:
+            raise ValueError("%s is negative and must be positive" % (n))
+        
+        if n in [0, 1]:
+            return 1
+        
         return Tools.reduce(MUL, [i for i in range(1, n+1)])
 
     @staticmethod
@@ -58,8 +64,11 @@ class Math:
         
         #Any number to the power of 1/r will give its rth root.
 
-        if type(n) not in [int, float] or n < 0:
-            raise TypeError("n must be a positve integer or float")
+        if type(n) not in [int, float]:
+            raise TypeError("%s is not a integer or floating point value" % (n))
+        
+        if n < 0:
+            raise ValueError("%s is negative and must be positive" % (n))
         
         power = 1/r
         val = Decimal(n ** power)
@@ -76,8 +85,11 @@ class Math:
         #val = posPHIⁿ - negPHIⁿ / 2ⁿ * √5
         #floor(val)
 
-        if type(n) != int or n < 0:
-            raise TypeError("n must be a positive integer")
+        if type(n) != int:
+            raise TypeError("%s is not a integer and must be" % (n))
+        
+        if n < 0:
+            raise ValueError("%s is negative and must be positive" % (n))
 
         posPHI = 1 + root(5)
         negPHI = 1 - root(5)
@@ -91,7 +103,7 @@ class Math:
         # Take an array and reduce it using MUL
 
         if not hasattr(arr, "__iter__"):
-            raise TypeError(f"{arr} is not iterable and must be")
+            raise TypeError("%s is not iterable and must be" % (arr))
 
         return Tools.reduce(MUL, arr)
 
@@ -107,7 +119,7 @@ class Math:
         # Take an array and reduce it using ADD
 
         if not hasattr(arr, "__iter__"):
-            raise TypeError(f"{arr} is not iterable and must be")
+            raise TypeError("%s is not iterable and must be" % (arr))
 
         return Tools.reduce(ADD, arr)
 
@@ -117,6 +129,32 @@ class Math:
 
         flattened_arr = Tools.flatten(arr)
         return Math.sum(flattened_arr)
+    
+    @staticmethod
+    def nextPrime(n):
+        # Take an positive integer or floating point value and return the next prime number
+        
+        if type(n) not in [int, float]:
+            raise TypeError("%s is not a integer or floating point value" % (n))
+        
+        if n < 1:
+            raise ValueError("%s is smaller than 1 and must not be" % (n))
+        
+        primeFound = False
+        while not primeFound:
+            numerator = Math.fact(n) % (n+1)
+            fract = numerator / n
+            res = (fract * (n-1)) + 2
+            if n == 1:
+                primeFound = True
+            elif n == 3:
+                res = 5.0
+                primeFound = True
+            elif res != 2:
+                primeFound = True
+            else:
+                n += 1
+        return res
 
 class Tools:
     # Container for all 'tool' functions
@@ -135,7 +173,7 @@ class Tools:
                 raise TypeError("cannot perform reduction of empty interable with no start value")
         
         if not callable(func):
-            raise TypeError(f"{func} is not callable and must be")
+            raise TypeError("%s is not callable and must be" % (func))
 
         for v in it:
             val = func(val, v)
